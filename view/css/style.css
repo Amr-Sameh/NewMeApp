@@ -1,3 +1,34 @@
+/*
+General
+ */
+body{
+    height: 3000px;
+}
+.text-wrap{
+    word-wrap: break-word;
+}
+/**************************************************/
+/*
+nav
+ */
+.nav-bar{
+    position: fixed;
+    z-index: 50;
+    height: 70px;
+    padding-top: 5px;
+    background-color: #7fb6ff;
+    color: #fff;
+    width: inherit;
+    line-height: 70px;
+
+}
+.nav-bar a ,.nav-bar a:hover {
+    color: #fff;
+}
+
+/******************************************/
+
+
 /**
 Mobile view
  */
@@ -12,6 +43,7 @@ Mobile view
     background-size: auto;
     background-repeat: repeat;
     box-shadow: none;
+
 }
 
 @media (max-width: 479px) {
@@ -92,3 +124,70 @@ padding: 0;
 }
 
 /************************************************************************/
+
+/*
+News Page
+ */
+
+.news-page{
+padding: 0;
+    margin: 0;
+}
+
+.news-page .title{
+
+}
+.news-page .news-img{
+  margin-bottom: 50px;
+}
+
+
+.news-body .media ,
+.news-body .media-left{
+    padding:0;
+}
+
+.news-body .media-object{
+    max-width: 100%;
+    min-height: 50px;
+}
+
+.comment-header{
+    font-size: 18px;
+    color: #7f8c8d;
+    font-weight: bold;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 10px;
+    padding-bottom: 2px;
+}
+.delete-comment,.edit-comment{
+    transition: all 2s ease-in-out;
+}
+.delete-comment:hover,.edit-comment:hover{
+    cursor: pointer;
+    border-bottom: 1px solid #777777;
+}
+
+
+
+
+/*************************************************************************/
+
+
+
+#cd-timeline {
+    position: relative;
+    padding: 2em 0;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+#cd-timeline::before {
+    /* this is the vertical line */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 18px;
+    height: 100%;
+    width: 4px;
+    background: #d7e4ed;
+}

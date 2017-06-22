@@ -6,8 +6,11 @@
  * Date: 6/18/2017
  * Time: 11:10 PM
  */
+include_once "../database/news_query.php";
+
 class news
 {
+    private $results_query;
     private $contain_image;
     private $contain_video;
     private $image_url;
@@ -17,6 +20,144 @@ class news
     private $date;
     private  $default_image="http://static1.squarespace.com/static/55df7cb6e4b0ce4422bb2a5f/t/5664d384e4b078c56b57b7b9/1449448326336/2eaf03_10e686a1b2b146218710ee3e6d7c37be.gif_srz_980_317_85_22_0.50_1.20_0.00_gif_srz.gif?format=1500w";
     private $id;
+    private $writer;
+
+
+
+    public  function __construct()
+    {
+        $this->news_query = new news_query();
+    }
+
+
+
+
+    public function GetNewById($id){
+
+        $data= $this->news_query->GetNewById($id);
+        $result = new news();
+        $result->setDate($data['date']);
+        $result->setContent($data['content']);
+        $result->setTitle($data['title']);
+        $result->setContainImage($data['contain_image']);
+        $result->setContainVideo($data['contain_video']);
+        $result->setImageUrl($data['image_url']);
+        $result->setVideoUrl($data['video_url']);
+        $result->setWriter($data['writer']);
+        return $result;
+    }
+
+    public function GetAllNews(){
+
+        $datalist= $this->news_query->getallnews();
+        $news=array();
+        foreach ($datalist as $data) {
+            $result = new news();
+            $result->setDate($data['date']);
+            $result->setContent($data['content']);
+            $result->setTitle($data['title']);
+            $result->setContainImage($data['contain_image']);
+            $result->setContainVideo($data['contain_video']);
+            $result->setImageUrl($data['image_url']);
+            $result->setVideoUrl($data['video_url']);
+            $result->setWriter($data['writer']);
+            $result->setId($data['id']);
+            array_push($news,$result);
+        }
+        return $news;
+    }
+public function getrecentthree(){
+    $datalist= $this->news_query->getrecentthree();
+    $news=array();
+    foreach ($datalist as $data) {
+        $result = new news();
+        $result->setDate($data['date']);
+        $result->setContent($data['content']);
+        $result->setTitle($data['title']);
+        $result->setContainImage($data['contain_image']);
+        $result->setContainVideo($data['contain_video']);
+        $result->setImageUrl($data['image_url']);
+        $result->setVideoUrl($data['video_url']);
+        $result->setWriter($data['writer']);
+        $result->setId($data['id']);
+        array_push($news,$result);
+    }
+    return $news;
+}
+
+
+
+    public function GetLikesById($id)
+    {
+      return  $this->news_query->GetLikesById($id);
+    }
+
+    public function GetCommentsById($id)
+    {
+        return  $this->news_query->GetCommentsById($id);
+
+    }
+
+    public function like ($user_id,$id){
+        $this->news_query->like($user_id,$id);
+    }
+    public function dislike ($user_id,$id){
+        $this->news_query->dislike($user_id,$id);
+    }
+
+
+
+    public function deletecomment($comment_id)
+    {
+        $this->news_query->deletecomment($comment_id);
+    }
+
+
+    public function editcomment($comment_id,$content)
+    {
+        $this->news_query->editcomment($comment_id,$content);
+    }
+    public function addcomment($news_id,$content,$user_id,$user_name)
+    {
+        $this->news_query->addcomment($news_id,$content,$user_id,$user_name);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /**
+     * @return mixed
+     */
+    public function getWriter()
+    {
+        return $this->writer;
+    }
+
+    /**
+     * @param mixed $writer
+     */
+    public function setWriter($writer)
+    {
+        $this->writer = $writer;
+    }
 
     /**
      * @return mixed
