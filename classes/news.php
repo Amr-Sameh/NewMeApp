@@ -10,7 +10,7 @@ include_once "../database/news_query.php";
 
 class news
 {
-    private $results_query;
+    private $news_query;
     private $contain_image;
     private $contain_video;
     private $image_url;
@@ -85,9 +85,25 @@ public function getrecentthree(){
     return $news;
 }
 
+    public function addnews($title,$content,$name,$image)
+    {
+        return  $this->news_query->addnews($title,$content,$name,$image);
 
+    }
+    public function updateimage($image){
+        $this->news_query-> updateimage($image);
+    }
 
-    public function GetLikesById($id)
+    public function deletenews($id){
+
+        $this->news_query-> deletenews($id);
+    }
+    public function editnews($title,$content,$image,$id)
+    {
+        $this->news_query->editnews($title,$content,$image,$id);
+    }
+
+        public function GetLikesById($id)
     {
       return  $this->news_query->GetLikesById($id);
     }

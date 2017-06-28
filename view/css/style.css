@@ -4,8 +4,26 @@ General
 body{
     height: 3000px;
 }
+*{
+ outline: none;
+}
 .text-wrap{
     word-wrap: break-word;
+}
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    background-color: #7fb6ff;
+
 }
 /**************************************************/
 /*
@@ -68,6 +86,45 @@ Home Slider
 
 /**************************************************************/
 
+/*
+Home
+ */
+
+.home-icon{
+    margin-top:10px ;
+    margin-bottom: 10px;
+}
+.home-icon a{
+    background-color: #0e6dcd;
+    min-height: 80px;
+    border-radius: 50%;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.home-icon a i{
+    font-size: 25px;
+}
+.home-icon a:hover{
+    color: #fff;
+    text-decoration: none;
+
+}
+.icon-content{
+    margin-top: 10px;
+    line-height: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+/**************************************************************/
 /*
 All news
  */
@@ -160,12 +217,17 @@ padding: 0;
     margin-bottom: 10px;
     padding-bottom: 2px;
 }
-.delete-comment,.edit-comment{
+.delete-comment,.edit-comment
+,.edit-news,.delete-news{
     transition: all 2s ease-in-out;
+    color: black;
 }
-.delete-comment:hover,.edit-comment:hover{
+.delete-comment:hover,.edit-comment:hover ,
+.delete-news:hover, .edit-news:hover{
     cursor: pointer;
     border-bottom: 1px solid #777777;
+    color: black;
+
 }
 
 
@@ -175,19 +237,96 @@ padding: 0;
 
 
 
-#cd-timeline {
-    position: relative;
-    padding: 2em 0;
-    margin-top: 2em;
-    margin-bottom: 2em;
+/*
+Add news
+ */
+.add-news-header{
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e8e8e8;
 }
-#cd-timeline::before {
-    /* this is the vertical line */
-    content: '';
+.fileUpload button{
+    font-size: 5vw;
+}
+.fileUpload input.upload {
+    width: 100%;
     position: absolute;
     top: 0;
-    left: 18px;
-    height: 100%;
-    width: 4px;
-    background: #d7e4ed;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    opacity: 0;
+    cursor: pointer;
+}
+#image ,.fileUpload , input[type='file']{
+    cursor: pointer;
+
+}
+
+/**************************************************************************/
+
+/**
+Message part
+Source : https://codepen.io/2ne/pen/osvpj
+ */
+.message-header{
+    background-color: #eee;
+    font-weight: bold;
+    height:50px;
+    line-height: 50px;
+}
+.message-container{
+    min-height:200px;
+}
+.message {
+    border-radius: 20px 20px 20px 20px;
+    margin: 0 15px 10px;
+    padding: 15px 20px;
+    position: relative;
+}
+.message.to {
+    background-color: #2095FE;
+    color: #fff;
+    margin-left: 80px;
+}
+.message.from {
+    background-color: #E5E4E9;
+    color: #363636;
+    margin-right: 80px;
+}
+.message.to + .message.to,
+.message.from + .message.from {
+    margin-top: -7px;
+}
+.message:before {
+    border-color: #2095FE;
+    border-radius: 50% 50% 50% 50%;
+    border-style: solid;
+    border-width: 0 20px;
+    bottom: 0;
+    clip: rect(20px, 35px, 42px, 0px);
+    content: " ";
+    height: 40px;
+    position: absolute;
+    right: -50px;
+    width: 30px;
+    z-index: -1;
+}
+.message.from:before {
+    border-color: #E5E4E9;
+    left: -50px;
+    transform: rotateY(180deg);
+}
+.todate{
+    float: right;
+    padding-right: 35px;
+    margin-top: -10px;
+}
+.fromdate{
+    float: left;
+    padding-left: 35px;
+    margin-top: -10px;
+}
+.clear{
+    clear: both;
 }

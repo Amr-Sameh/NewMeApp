@@ -13,16 +13,18 @@ if (isset($_GET['id'])){
     $id=$_GET['id'];
 }
 else{
-    header('location:index.php');
+    header('location:inde.php');
 }
 
 $new=new news();
 $new = $new->GetNewById($id);
+if($new->getTitle()==null && $new->getContent()==null&&!$new->getContainImage()){
+    header('location:inde.php');
+
+}
 session_start();
-$_SESSION['id']=6;
-$_SESSION['user_type']=0;
-$_SESSION['name']="amr";
-//session_destroy();
+
+
 ?>
 <section class="mobile-wrapper text-wrap">
     <?php include "nav.php";?>
@@ -32,7 +34,16 @@ $_SESSION['name']="amr";
 
 
         <div class="news-img col-xs-12">
-            <img src="<?php echo $new->getImageUrl()?>" class="img-responsive ">
+            <?php
+            if($new->getContainImage()){
+                $image= $new->getImageUrl();
+            }
+            else{
+                $image = $new->getDefaultImage();
+            }
+
+            ?>
+            <img src="<?php echo $image?>" class="img-responsive ">
         </div>
 
 

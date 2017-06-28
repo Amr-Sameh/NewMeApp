@@ -117,8 +117,48 @@ foreach ($comment_table as $value) {
         exit();
     }
 
+    else if ($_POST['action'] == 'GetMessages' &&isset($_SESSION['id'])) {
+        include "../classes/message.php";
+        $message = new message();
+        $id = $_SESSION['id'];
+        $to = $_POST['to'];
+        $data= $message->getmessage($id,$to);
+        $msg='';
+        foreach ($data as $val){
+
+            if ($val['sender']==$id){
+                $msg.='<div class="message to">'.$val['content'].'</div>';
+                $msg.='<span class="todate">'.$val['date'].'</span>';
+                $msg.='<div class="clear"></div>';
+
+            }
+            else{
+
+                $msg.='<div class="message from">'.$val['content'].'</div>';
+                $msg.='<span class="fromdate">'.$val['date'].'</span>';
+                $msg.='<div class="clear"></div>';
+            }
 
 
+        }
+
+echo $msg;
+        exit();
+    }
+
+
+    else if ($_POST['action'] == 'SendMessages' &&isset($_SESSION['id'])) {
+        include "../classes/message.php";
+        $message = new message();
+        $id = $_SESSION['id'];
+        $to = $_POST['to'];
+        $content = $_POST['content'];
+        $message->sendmessage($id,$to,$content);
+
+
+
+
+    }
 
 
 

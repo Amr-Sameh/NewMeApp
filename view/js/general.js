@@ -1,7 +1,25 @@
 $(function(){
     new WOW().init();
 
-});/**
+});
+
+
+
+$(function () {
+
+    $('[placeholder]').focus(function () {
+        $(this).attr('data-text',$(this).attr('placeholder'));
+        $(this).attr('placeholder','');
+    }).blur(function () {
+        $(this).attr('placeholder',$(this).attr('data-text'));
+    });
+
+
+});
+
+
+
+/**
  * Created by PC - MeiR on 6/18/2017.
  */
 $(document).ready(function () {
@@ -74,16 +92,35 @@ if($('#comment-section').length!=0){
 /*********************************************************/
 
 
+/*
+Messages Part
+ */
 
 
+    if($('.messages-section').length!=0) {
+        var id = document.getElementsByClassName('messages-section')[0].id;
+        getmessages(id);
+        setInterval(function () {
+            getmessages(id);
+        }, 1000);
 
 
+    }
 
 
+    $(document).on('click', '.send-msg', function () {
+        var id = document.getElementsByClassName('messages-section')[0].id;
+        var content = document.getElementById('new-msg-content').value;
+       if (content!=null || content!=""){
+           sendmessages(id,content);
+       }
+        document.getElementById('new-msg-content').value="";
+        if (content!=null || content!="") {
 
+            getmessages(id);
+        }
 
-
-
+    });
 
 
 
@@ -180,6 +217,33 @@ function addcomment(content,news_id) {
         url: "../classes/ajax_action.php",
         method:"POST",
         data:{action:'AddComment',content:content,news_id:news_id},
+        success:function (data) {
+        }
+
+    });
+
+}
+
+
+function getmessages(id) {
+    $.ajax({
+        url: "../classes/ajax_action.php",
+        method:"POST",
+        data:{action:'GetMessages',to:id},
+        success:function (data) {
+           $('#message-container').html(data);
+        }
+
+    });
+
+}
+
+
+function sendmessages(id,content) {
+    $.ajax({
+        url: "../classes/ajax_action.php",
+        method:"POST",
+        data:{action:'SendMessages',to:id,content:content},
         success:function (data) {
         }
 
