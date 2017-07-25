@@ -146,6 +146,35 @@ echo $msg;
         exit();
     }
 
+    else if ($_POST['action'] == 'GetUserMessages' &&isset($_SESSION['id'])) {
+        include "../classes/message.php";
+        $message = new message();
+        $id = $_SESSION['id'];
+        $to = 1;
+        $data= $message->getmessage($id,$to);
+        $msg='';
+        foreach ($data as $val){
+
+            if ($val['sender']==$id){
+                $msg.='<div class="message to">'.$val['content'].'</div>';
+                $msg.='<span class="todate">'.$val['date'].'</span>';
+                $msg.='<div class="clear"></div>';
+
+            }
+            else{
+
+                $msg.='<div class="message from">'.$val['content'].'</div>';
+                $msg.='<span class="fromdate">'.$val['date'].'</span>';
+                $msg.='<div class="clear"></div>';
+            }
+
+
+        }
+
+        echo $msg;
+        exit();
+    }
+
 
     else if ($_POST['action'] == 'SendMessages' &&isset($_SESSION['id'])) {
         include "../classes/message.php";
@@ -159,8 +188,50 @@ echo $msg;
 
 
     }
+    else if ($_POST['action'] == 'SendUserMessages' &&isset($_SESSION['id'])) {
+        include "../classes/message.php";
+        $message = new message();
+        $id = $_SESSION['id'];
+        $to = 1;
+        $content = $_POST['content'];
+        $message->sendmessage($id,$to,$content);
 
 
+
+
+    }
+
+    else if ($_POST['action'] == 'GetLastMsg'){
+        include "../classes/message.php";
+        include "../classes/user.php";
+        $user=   new user();
+        $message = new message();
+        $id = $_SESSION['id'];
+        $senders = $message->getsendusers();
+        $msg_section='';
+        foreach ($senders as $val){
+            
+            $name = $user->msgname($val['sender']);
+            $msg=$message->GetLastMessageAdminAndUser($val['sender']);
+            
+            $msg_section.='<a href="contact.php?id='.$val['sender'].'"><div class="col-xs-12 last-msg" id="'.$val['sender'].'">';
+            $msg_section.='<h3>'.$name[0].'</h3> <hr>';
+            $msg_section.=' <p> '.$msg[0]['content'].'</p>';
+            $msg_section.=' <span style="font-weight: bold; color: #555" >'.$msg[0]['date'].'</span>';
+            if ($msg[0]['sender']==1){
+                $msg_section.='<span style="font-weight: bold; color: #555" > &nbsp;Sent By Admin</span>';
+            }
+            else{
+                $msg_section.='<span style="font-weight: bold; color: #555" >&nbsp;Sent By User</span> ';
+            }
+            $msg_section.="</div></a>";
+    
+        }
+        echo $msg_section;
+        exit();
+
+
+    }
 
 
 

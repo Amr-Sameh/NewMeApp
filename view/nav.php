@@ -19,6 +19,6 @@ if(!isset($_SERVER['HTTP_REFERER'])){
     <span class="col-xs-3"></span>
     <?php }?>
 <span class="col-xs-6 page-title" style="font-weight: bold"><?php echo $page_title;?></span>
-   <a href="inde.php"> <span class="col-xs-3 home" style="cursor: pointer;"><i class="fa fa-home"></i> </span>
+   <a href="index.php"> <span class="col-xs-3 home" style="cursor: pointer;"><i class="fa fa-home"></i> </span>
    </a>
 </nav>

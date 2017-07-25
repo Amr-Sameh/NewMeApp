@@ -39,10 +39,16 @@ class user
     }
 
 
+    public function msgname($id){
+      return  $this->user_query->getusername($id);
+    }
+    public function rej($user,$name,$pass,$phone,$email,$gender){
+        $this->user_query->rej($user,$name,$pass,$phone,$email,$gender);
+    }
 
-
-
-
+    public function checkusername($uswername){
+      return  $this->user_query->checkusername($uswername);
+    }
 
 
 

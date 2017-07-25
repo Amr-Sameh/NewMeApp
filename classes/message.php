@@ -26,4 +26,16 @@ private $message_query;
         $this->message_query->sendmessage($from, $to, $content);
     }
 
+
+    public function getsendusers(){
+       return $this->message_query->getsendusers();
+
+    }
+
+
+
+    public function GetLastMessageAdminAndUser($id){
+        return $this->message_query->GetLastMessageAdminAndUser($id);
+    }
+
     }

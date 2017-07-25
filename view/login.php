@@ -13,7 +13,7 @@ include "static/header.php";
 session_start();
 
 if(isset($_SESSION['id'])) {
-    header('location:inde.php');
+    header('location:index.php');
 }
 
 
@@ -43,7 +43,7 @@ if(!isset($_POST['username'])||!isset($_POST['password'])||$_POST['username']=='
         $_SESSION['pass']=$data->getPass();
         $_SESSION['user_name']=$data->getUserName();
         $_SESSION['user_type']=$data->getUserType();
-        header('location:inde.php');
+        header('location:index.php');
     } 
 }
 
@@ -69,7 +69,7 @@ if(!isset($_POST['username'])||!isset($_POST['password'])||$_POST['username']=='
 </form>
     <br>
 <span class="text-danger col-xs-12 text-center" style="font-weight: bolder;"><?php echo $message;?></span>
-
+    <h3 style="font-size: 17px" class="col-xs-12">Dont Have Account yet ! <a href="signup.php">Register Now</a></h3>
 </section>
 <?php
 include "static/footer.php";

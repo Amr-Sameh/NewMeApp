@@ -33,9 +33,16 @@ class database
         }
         return self::$instance;
     }
-    public function excute_query($query){
+    public function excute_query($query,$array){
         $value=$this->database_connection->prepare($query);
-        $value->execute();
+        if ($array==null){
+            $value->execute();
+
+        }
+        else {
+            $value->execute($array);
+        }
+
         return $value;
     }
 }

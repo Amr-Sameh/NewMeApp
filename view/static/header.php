@@ -14,14 +14,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" href="css/bootstrap.min.css" >
+        <link rel="stylesheet" href="css/bootstrap.min.css" >
+    <link rel="stylesheet" href="css/jquery.Jcrop.css" >
+    <link rel="stylesheet" href="css/jquery.Jcrop.min.css" >
     <link rel="stylesheet" href="css/bootstrap.css" >
-    <link rel="stylesheet" href="css/animate.css" >
-    <link rel="stylesheet" href="css/font-awesome.min.css" >
-    <link rel="stylesheet" href="http://ins.kgoc.com/insmobile/css/webflow.css" >
+        <link rel="stylesheet" href="css/animate.css" >
+        <link rel="stylesheet" href="css/font-awesome.min.css" >
+        <link rel="stylesheet" href="http://ins.kgoc.com/insmobile/css/webflow.css" >
+        <link rel="stylesheet" href="css/uikit-rtl.min.css" >
+        <link rel="stylesheet" href="css/uikit.min.css" >
     <link rel="stylesheet" href="css/style.css" >
-    <link rel="stylesheet" href="css/uikit-rtl.min.css" >
-    <link rel="stylesheet" href="css/uikit.min.css" >
+
 
 
 

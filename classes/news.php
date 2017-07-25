@@ -14,6 +14,7 @@ class news
     private $contain_image;
     private $contain_video;
     private $image_url;
+    private $cover_image_url;
     private $video_url;
     private $title;
     private $content;
@@ -21,6 +22,7 @@ class news
     private  $default_image="http://static1.squarespace.com/static/55df7cb6e4b0ce4422bb2a5f/t/5664d384e4b078c56b57b7b9/1449448326336/2eaf03_10e686a1b2b146218710ee3e6d7c37be.gif_srz_980_317_85_22_0.50_1.20_0.00_gif_srz.gif?format=1500w";
     private $id;
     private $writer;
+    private $like;
 
 
 
@@ -44,6 +46,7 @@ class news
         $result->setImageUrl($data['image_url']);
         $result->setVideoUrl($data['video_url']);
         $result->setWriter($data['writer']);
+        $result->setCoverImageUrl($data['cover']);
         return $result;
     }
 
@@ -53,6 +56,7 @@ class news
         $news=array();
         foreach ($datalist as $data) {
             $result = new news();
+            $result->setCoverImageUrl($data['cover']);
             $result->setDate($data['date']);
             $result->setContent($data['content']);
             $result->setTitle($data['title']);
@@ -62,6 +66,8 @@ class news
             $result->setVideoUrl($data['video_url']);
             $result->setWriter($data['writer']);
             $result->setId($data['id']);
+            $likes=$result->GetLikesById($data['id']);
+            $result->setLike(count($likes));
             array_push($news,$result);
         }
         return $news;
@@ -80,6 +86,7 @@ public function getrecentthree(){
         $result->setVideoUrl($data['video_url']);
         $result->setWriter($data['writer']);
         $result->setId($data['id']);
+        $result->setCoverImageUrl($data['cover']);
         array_push($news,$result);
     }
     return $news;
@@ -93,14 +100,17 @@ public function getrecentthree(){
     public function updateimage($image){
         $this->news_query-> updateimage($image);
     }
+    public function updatecoverimage($image){
+        $this->news_query-> updatecoverimage($image);
+    }
 
     public function deletenews($id){
 
         $this->news_query-> deletenews($id);
     }
-    public function editnews($title,$content,$image,$id)
+    public function editnews($title,$content,$image,$id,$cover)
     {
-        $this->news_query->editnews($title,$content,$image,$id);
+        $this->news_query->editnews($title,$content,$image,$id,$cover);
     }
 
         public function GetLikesById($id)
@@ -309,6 +319,38 @@ public function getrecentthree(){
     public function setDate($date)
     {
         $this->date = $date;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLike()
+    {
+        return $this->like;
+    }
+
+    /**
+     * @param mixed $like
+     */
+    public function setLike($like)
+    {
+        $this->like = $like;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCoverImageUrl()
+    {
+        return $this->cover_image_url;
+    }
+
+    /**
+     * @param mixed $cover_image_url
+     */
+    public function setCoverImageUrl($cover_image_url)
+    {
+        $this->cover_image_url = $cover_image_url;
     }
 
 

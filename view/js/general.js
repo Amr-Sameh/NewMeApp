@@ -24,7 +24,6 @@ $(function () {
  */
 $(document).ready(function () {
 
-
     /*
     new page part
      */
@@ -106,6 +105,14 @@ Messages Part
 
 
     }
+    if($('.umessages-section').length!=0) {
+        getusermessages();
+        setInterval(function () {
+            getusermessages();
+        }, 1000);
+
+
+    }
 
 
     $(document).on('click', '.send-msg', function () {
@@ -121,6 +128,60 @@ Messages Part
         }
 
     });
+
+    $(document).on('click', '.usend-msg', function () {
+        var content = document.getElementById('new-msg-content').value;
+        if (content!=null || content!=""){
+            sendusermessages(content);
+        }
+        document.getElementById('new-msg-content').value="";
+        if (content!=null || content!="") {
+
+            getusermessages();
+        }
+
+    });
+
+    if($('.last-msg-contenier').length!=0) {
+        getlastmsg();
+        setInterval(function () {
+            getlastmsg();
+        }, 1000);
+
+
+    }
+
+
+    (document).on('click', '.last-msg', function () {
+       alert(this.id);
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -237,6 +298,18 @@ function getmessages(id) {
     });
 
 }
+function getusermessages() {
+    $.ajax({
+        url: "../classes/ajax_action.php",
+        method:"POST",
+        data:{action:'GetUserMessages'},
+        success:function (data) {
+            $('#message-container').html(data);
+        }
+
+    });
+
+}
 
 
 function sendmessages(id,content) {
@@ -245,6 +318,33 @@ function sendmessages(id,content) {
         method:"POST",
         data:{action:'SendMessages',to:id,content:content},
         success:function (data) {
+        }
+
+    });
+
+}
+function sendusermessages(content) {
+    $.ajax({
+        url: "../classes/ajax_action.php",
+        method:"POST",
+        data:{action:'SendUserMessages',content:content},
+        success:function (data) {
+        }
+
+    });
+
+}
+
+
+
+
+function getlastmsg() {
+    $.ajax({
+        url: "../classes/ajax_action.php",
+        method:"POST",
+        data:{action:'GetLastMsg'},
+        success:function (data) {
+            $('#last-msg-contenier').html(data);
         }
 
     });

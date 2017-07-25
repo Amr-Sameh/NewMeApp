@@ -8,8 +8,9 @@
 session_start();
 include "static/header.php";
 include "../classes/news.php";
+include "../classes/message.php";
 if (!isset($_SESSION['user_type']) ||$_SESSION['user_type']!=0 ){
-    header('location:inde.php');
+    header('location:index.php');
 }
 
 
@@ -34,7 +35,16 @@ if(is_uploaded_file($_FILES['image']['tmp_name'])){
         $new->updateimage($id.'.'.$image_ex);
     }
 
+ if(is_uploaded_file($_FILES['cov_image']['tmp_name'])){
 
+
+     $image_ex=substr($_FILES["cov_image"]["name"], strrpos($_FILES["cov_image"]["name"], ".") + 1);
+
+     $uploadfile=$_FILES["cov_image"]["tmp_name"];
+     $folder="upload/";
+     move_uploaded_file($_FILES["cov_image"]["tmp_name"], $folder.$id.'_cov.'.$image_ex);
+     $new->updatecoverimage($id.'_cov.'.$image_ex);
+ }
 
 }
 
@@ -45,6 +55,7 @@ else if(isset($_POST['btn-EditNews'])){
     $id= $_POST['id'];
     $new = new news();
     $image=null;
+    $cover=null;
     if(is_uploaded_file($_FILES['image']['tmp_name'])){
         $image_ex=substr($_FILES["image"]["name"], strrpos($_FILES["image"]["name"], ".") + 1);
 
@@ -53,7 +64,15 @@ else if(isset($_POST['btn-EditNews'])){
         move_uploaded_file($_FILES["image"]["tmp_name"], $folder.$id.'.'.$image_ex);
         $image=$id.'.'.$image_ex;
     }
-   $new->editnews($title,$content,$image,$id);
+    if(is_uploaded_file($_FILES['cov_image']['tmp_name'])){
+        $image_ex=substr($_FILES["cov_image"]["name"], strrpos($_FILES["cov_image"]["name"], ".") + 1);
+
+        $uploadfile=$_FILES["cov_image"]["tmp_name"];
+        $folder="upload/";
+        move_uploaded_file($_FILES["cov_image"]["tmp_name"], $folder.$id.'_cov.'.$image_ex);
+        $cover=$id.'_cov.'.$image_ex;
+    }
+   $new->editnews($title,$content,$image,$id,$cover);
 
 
 }
@@ -177,9 +196,18 @@ $page_title="Admin";
             </div>
             <span id="filename" class="text-center text-danger col-xs-12" style="font-weight: bolder" ></span>
 
+        </div>
+        <div  class="upload-part col-lg-12 " >
 
+            <div class="fileUpload btn btn-primary col-lg-6 col-lg-offset-3  col-xs-8 col-xs-offset-2" style="margin-bottom: 30px" >
+                <span>Add Cover Image <i class="fa fa-camera" aria-hidden="true"></i></span>
+                <input   type="file" id="cov_image" name="cov_image" class=" image   input-lg input-lg col-lg-7 col-lg-offset-7 upload col-xs-8" accept="image/*"  >
+
+            </div>
+            <span id="filename" class="text-center text-danger col-xs-12" style="font-weight: bolder" ></span>
 
         </div>
+        <img src=""id="cover_show"  class="col-xs-12" style="display: block">
      <hr class="col-xs-offset-2 col-xs-8" >
 
         <button name="btn-AddNewNews" type="submit" class="btn-lg btn-primary">Add News <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -228,7 +256,7 @@ $page_title="Admin";
                 <div class="single-new col-xs-12 ">
                     <div class="single-new-img col-xs-4">
                         <img src="<?php if ($new->getContainImage()) {
-                            echo $new->getImageUrl();
+                            echo $new->getCoverImageUrl();
                         } else {
                             echo $new->getDefaultImage();
                         } ?>" class="img-responsive ">
@@ -318,9 +346,32 @@ $page_title="Admin";
 
                 </div>
                 <span id="filename" class="text-center text-danger col-xs-12" style="font-weight: bolder" ></span>
+            </div>
 
 
 
+            <div class="news-img col-xs-12">
+                <?php
+                if($new->getContainImage()){
+                    $image= $new->getCoverImageUrl();
+                    echo '  <img src="'.$image.'" class="img-responsive ">';
+                }
+                else{
+                    echo "<h3 class='col-xs-12 text-danger text-center'>No Image </h3>";
+                }
+
+                ?>
+
+            </div>
+
+            <div  class="upload-part col-lg-12 " >
+
+                <div class="fileUpload btn btn-primary col-lg-6 col-lg-offset-3  col-xs-8 col-xs-offset-2" style="margin-bottom: 30px" >
+                    <span>Change CovImage <i class="fa fa-camera" aria-hidden="true"></i></span>
+                    <input   type="file" id="cov_image" name="cov_image" class=" image   input-lg input-lg col-lg-7 col-lg-offset-7 upload col-xs-8" accept="image/*"  >
+
+                </div>
+                <span id="filename" class="text-center text-danger col-xs-12" style="font-weight: bolder" ></span>
             </div>
             <hr class="col-xs-offset-2 col-xs-8" >
             <input value="<?php echo $id;?>" hidden name="id">
@@ -455,8 +506,19 @@ $data=$db->excute_query($query)->fetch();
 
         <?php
     }
-    #######################################################################333
-    ?>
+    ##########################################################################
+
+
+##################
+### Contact us ###
+##################
+          if ($_GET['action']=="ContactUs") {
+              ?>
+
+<div class="col-xs-12 last-msg-contenier" id="last-msg-contenier" >
+
+
+</div>
 
 
 
@@ -467,6 +529,16 @@ $data=$db->excute_query($query)->fetch();
 
 
 
+
+
+
+
+
+
+
+              <?php
+          }
+?>
 
 
 
@@ -518,6 +590,11 @@ if ($_GET['action']=="") {
             <span class="icon-content"> <i class="fa fa-question-circle" aria-hidden="true"></i>
                 Manage FAQ</span>
         </a></div>
+    <div  class="home-icon col-xs-4"> <a href="panel.php?action=ContactUs" class="col-xs-12">
+            <br>
+            <span class="icon-content"> <i class="fa fa-question-circle" aria-hidden="true"></i>
+                Contact Us</span>
+        </a></div>
 
 
 
@@ -567,10 +644,21 @@ if ($_GET['action']=="") {
 include "static/footer.php";
 ?>
 <script>
-    $('#image').change(function () {
-        var name =document.getElementById('image').value;
-        $('#filename').html(name.substr(12,name.length));
 
-    });
+        $('#image').change(function () {
+            var name = document.getElementById('image').value;
+            $('#filename').html(name.substr(12, name.length));
+
+        });
+        $('#cov_image').change(function (event) {
+            var tmppath = URL.createObjectURL(event.target.files[0]);
+            $("#cover_show").attr('src',tmppath);
+
+        });
+        $(document).ready(function () {
+
+            $('#cover_show').Jcrop();
+
+        });
 
 </script>

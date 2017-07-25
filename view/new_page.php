@@ -13,13 +13,13 @@ if (isset($_GET['id'])){
     $id=$_GET['id'];
 }
 else{
-    header('location:inde.php');
+    header('location:index.php');
 }
 
 $new=new news();
 $new = $new->GetNewById($id);
 if($new->getTitle()==null && $new->getContent()==null&&!$new->getContainImage()){
-    header('location:inde.php');
+    header('location:index.php');
 
 }
 session_start();
@@ -101,7 +101,7 @@ session_start();
 
 
             <!-- Edit Comment Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal fade" id="myModal" tabindexx="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
